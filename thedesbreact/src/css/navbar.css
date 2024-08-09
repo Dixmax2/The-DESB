@@ -61,3 +61,47 @@
 .navbar-nav-center {
   margin: 0 auto;
 }
+
+.offcanvas-top {
+  background-color: black; /* Fondo negro del Offcanvas */
+  color: white; /* Texto blanco */
+}
+
+.offcanvas-top .offcanvas-header .btn-close {
+  filter: invert(1); /* Cambia el color del botón de cerrar a blanco */
+}
+
+.product-list {
+  display: flex;
+  flex-direction: row; /* Cambia la dirección de los productos a fila */
+  flex-wrap: wrap; /* Permite que los productos se envuelvan en la siguiente línea si no caben en una sola línea */
+  gap: 1rem; /* Espacio entre productos */
+}
+
+.product {
+  flex: 1; /* Permite que cada producto ocupe el espacio disponible */
+  min-width: 100px; /* Ancho mínimo para cada producto, puedes ajustar según el diseño deseado */
+  margin-bottom: 1rem; /* Espacio debajo de cada producto */
+}
+
+.product h5 {
+  margin-bottom: 0.5rem;
+}
+
+.product ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.product ul li {
+  margin-bottom: 0.5rem;
+}
+
+.product ul li a {
+  color: white;
+  text-decoration: none;
+}
+
+.product ul li a:hover {
+  color: #e44604; /* Color del enlace al pasar el ratón */
+}
