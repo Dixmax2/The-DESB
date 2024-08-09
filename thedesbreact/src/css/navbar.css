@@ -1,0 +1,63 @@
+.navbar {
+  display: block;
+  width: 100%;
+  background: linear-gradient(90deg, black, #e44604, black);
+}
+
+.dropdown-toggle::after {
+  color: white !important; /* Cambiar el color de la flecha a blanco */
+}
+
+.dropdown-menu {
+  background-color: black !important; /* Cambiar el color de fondo del menú desplegable a negro */
+}
+
+.dropdown-item:hover {
+  background-color: black !important; /* Cambiar el color de fondo al pasar el cursor sobre el elemento */
+  color: #e44604 !important; /* Cambiar el color del texto al pasar el cursor sobre el elemento */
+}
+
+.navbar-nav .nav-link,
+.navbar-nav .dropdown-toggle {
+  color: white;
+  line-height: 1.5;
+  padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.navbar-nav .dropdown-toggle {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-nav .fa-icon {
+  margin-right: 0.5rem;
+}
+
+.navbar-nav .dropdown-menu {
+  background-color: black;
+  border: none;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+}
+
+.nav-item .nav-link,
+.nav-item .dropdown-toggle {
+  display: flex;
+  align-items: center;
+  color: white;
+}
+
+.nav-item .nav-link .fa-icon,
+.nav-item .dropdown-toggle .fa-icon {
+  color: white;
+  margin-right: 0.5rem;
+}
+
+.navbar-nav-center {
+  margin: 0 auto;
+}

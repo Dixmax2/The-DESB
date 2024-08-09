@@ -1,0 +1,54 @@
+/* Footer */
+.footer {
+  width: 100%;
+  background: linear-gradient(360deg, black, #e44604);
+  padding: 2em;
+  color: white;
+  position: relative;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.footer a {
+  color: white;
+  text-decoration: none;
+}
+
+ul li {
+  padding: 1em;
+}
+
+.footer-section {
+  margin-bottom: 1em;
+}
+
+.footer h5 {
+  margin-bottom: 1em;
+  font-size: 1.2em;
+}
+
+.footer-list {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-list li {
+  margin-bottom: 0.5em;
+}
+
+.footer-list li a:hover {
+  color: #e44604; /* Color más llamativo al pasar por encima */
+}
+
+.footer-socials {
+  display: flex;
+  gap: 15px;
+}
+
+.footer .col {
+  display: flex;
+  flex-direction: column;
+}
+
+

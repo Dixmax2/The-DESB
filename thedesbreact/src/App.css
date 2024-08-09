@@ -1,0 +1,83 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  background-color: #e9ecef;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.content {
+  flex: 1;
+}
+
+
+/*Login*/
+
+.login-container {
+  max-width: 400px; /* Define el ancho máximo del contenedor del formulario */
+  margin: 0 auto; /* Centra el contenedor horizontalmente */
+}
+
+.login-card {
+  border-radius: 15px; /* Añade bordes redondeados a la tarjeta */
+}
+
+.login-form {
+  padding: 20px; /* Añade relleno al formulario */
+}
+#olvidascontraseña:hover {
+ 
+  color: #e44604 !important; /* Cambiar el color del texto al pasar el cursor sobre el elemento */
+}
+#olvidascontraseña::after {
+  color: black!important; /* Cambiar el color de la flecha a blanco */
+}
+
+#pararegistrar:hover {
+ 
+  color: #e44604 !important; /* Cambiar el color del texto al pasar el cursor sobre el elemento */
+}
+#pararegistrar::after {
+  color: black!important; /* Cambiar el color de la flecha a blanco */
+}
+
+
+/*Dashboard*/
+.presentation {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.presentation h1 {
+  color: #333; /* Cambia el color del título si es necesario */
+}
+
+.presentation p {
+  color: #666; /* Cambia el color del texto si es necesario */
+}
+
+.card-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.card {
+  flex: 1;
+  margin-right: 10px; /* Ajusta el margen entre las cards si es necesario */
+}
+
+.card:last-child {
+  margin-right: 0; /* Elimina el margen derecho de la última card */
+}
+
+.video-container {
+  margin-bottom: 20px; /* Ajusta el margen inferior según sea necesario */
+}
+.video-container iframe {
+  border-radius: 10px; /* Ajusta el radio del borde redondeado según sea necesario */
+}
+
