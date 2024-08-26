@@ -131,7 +131,7 @@ const Navbar = () => {
       <div className="product">
         <h5>Nintendo</h5>
         <ul>
-          <li><a href="">Super Nintendo</a></li>
+          <li><a href="/supernintendo">Super Nintendo</a></li>
           <li><a href="/nintendo-3ds">Wii</a></li>
           <li><a href="/nintendo-wii">3DS</a></li>
         </ul>

@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"principal/controller"
 	"principal/database"
 	"principal/router"
 
@@ -24,25 +25,19 @@ func main() {
 	// Conectar a la base de datos.
 	database.ConnectDB()
 
-	// Obtener el objeto de base de datos SQL subyacente para configuraciones avanzadas.
-	sqlDB, err := database.DBConn.DB()
-	if err != nil {
-		log.Println("Error al obtener el objeto de base de datos SQL:", err)
-	}
-	// Asegurar que la base de datos se cierre al finalizar el programa.
-	defer sqlDB.Close()
 	// Crear una nueva instancia de la aplicación Fiber.
-
 	app := fiber.New(fiber.Config{
 		BodyLimit: 500 * 1024 * 1024, // 100 MB
 	})
 
 	app.Static("/projects", "./projects")
+	app.Static("/users", "./users")
+	app.Static("/uploads", "./uploads")
 
 	// Configurar middleware para permitir solicitudes CORS desde el frontend en localhost:3000.
 	app.Use(cors.New(cors.Config{
 		AllowCredentials: true,
-		AllowOrigins:     "http://localhost:3000",
+		AllowOrigins:     "http://localhost:3000, http://192.168.2.11:3000",
 		AllowMethods:     "GET, POST, PUT, DELETE",
 		AllowHeaders:     "Origin, Content-Type, Accept, Authorization", // Permitir estos encabezados en las solicitudes.
 	}))
@@ -52,7 +47,8 @@ func main() {
 	// Configurar las rutas de la aplicación utilizando el enrutador definido en el paquete 'router'.
 	router.StupRoutes(app)
 
-	// Iniciar el servidor en el puerto 4000.
+	go controller.HandleMessages()
 
+	// Iniciar el servidor en el puerto 4000.
 	app.Listen(":4000")
 }

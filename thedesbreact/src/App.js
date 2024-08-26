@@ -13,6 +13,7 @@ import Envio from './soporte/Envio';
 import Devolucion from './soporte/Devolucion';
 import Terminos from './soporte/Terminos';
 import Privacidad from './soporte/Privacidad';
+import Supernintendo from './productos/nintendo/supernintendo';
 import { useEffect } from 'react';
 import { useAppContext } from './contexto/UserContext';
 
@@ -59,6 +60,7 @@ function App() {
             <Route path="/devolucion" element={<Devolucion />} />
             <Route path="/terminos" element={<Terminos />} />
             <Route path="/privacidad" element={<Privacidad />} />
+            <Route path="/supernintendo" element={<Supernintendo />} />
           </Routes>
         </BrowserRouter>
       </div>

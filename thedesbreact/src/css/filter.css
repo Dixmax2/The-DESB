@@ -1,0 +1,31 @@
+/* src/componentes/Filter.css */
+
+.filter-card {
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 20px;
+  }
+  
+  .sticky-filter {
+    position: sticky;
+    top: 20px; /* Mantener una distancia desde la parte superior cuando se desplaza */
+  }
+  
+  .filter-title {
+    display: flex;
+    align-items: center;
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .filter-section-title {
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .mr-2 {
+    margin-right: 8px;
+  }
+  

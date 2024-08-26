@@ -20,8 +20,8 @@ const Footer = () => {
         <Col className="footer-section">
           <h5>Soporte</h5>
           <ul className="footer-list">
-            <li><Link to="/envio">Envío</Link></li>
-            <li><Link to="/devolucion">Devoluciones</Link></li>
+            <li><Link to="/envio">Envío y seguimiento</Link></li>
+            <li><Link to="/devolucion">Devoluciones, reembolsos y garantía</Link></li>
             <li><Link to="/terminos">Términos de servicio</Link></li>
             <li><Link to="/privacidad">Política de privacidad</Link></li>
           </ul>
