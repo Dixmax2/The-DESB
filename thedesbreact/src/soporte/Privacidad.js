@@ -78,7 +78,7 @@ const Privacidad = () => {
 
             <h3 className="mb-3" style={{ fontWeight: 'bold' }}>Publicidad Conductual</h3>
             <p>
-            Utilizamos su información personal para ofrecerle anuncios publicitarios y comunicaciones de marketing personalizadas que creemos que pueden ser de su interés. La información que recopilamos se ajusta y actualiza en función de sus preferencias y elecciones. Esto significa que la publicidad que verá en nuestro Sitio y en otros sitios web se personaliza para alinearse con sus intereses.
+              Utilizamos su información personal para ofrecerle anuncios publicitarios y comunicaciones de marketing personalizadas que creemos que pueden ser de su interés. La información que recopilamos se ajusta y actualiza en función de sus preferencias y elecciones. Esto significa que la publicidad que verá en nuestro Sitio y en otros sitios web se personaliza para alinearse con sus intereses.
             </p>
             
             <p>
@@ -86,11 +86,11 @@ const Privacidad = () => {
             </p>
 
             <p>
-             Compartimos información sobre su uso del Sitio, sus compras y su interacción con nuestros anuncios en otros sitios web con nuestros socios publicitarios. Esta información se recopila y actualiza continuamente para ofrecerle anuncios dirigidos que coincidan con sus preferencias, mediante cookies y otras tecnologías similares.
+              Compartimos información sobre su uso del Sitio, sus compras y su interacción con nuestros anuncios en otros sitios web con nuestros socios publicitarios. Esta información se recopila y actualiza continuamente para ofrecerle anuncios dirigidos que coincidan con sus preferencias, mediante cookies y otras tecnologías similares.
             </p>
             <p>
               Para comprender mejor cómo funciona la publicidad dirigida, le invitamos a visitar la página educativa de la{' '}
-               <a href="http://www.networkadvertising.org/understanding-online-advertising/how-does-it-work" target="_blank" rel="noopener noreferrer">
+               <a href="http://www.networkadvertising.org/understanding-online-advertising/how-does-it-work" target="_blank" rel="noopener noreferrer" style={{ color: '#e44604', textDecoration: 'underline' }}>
                   Network Advertising Initiative (NAI)
               </a>.
             </p>            
@@ -134,7 +134,7 @@ const Privacidad = () => {
 
             <h3 className="mb-3" style={{ fontWeight: 'bold' }}>Sus Derechos</h3>
             <p>
-              Si usted es residente del EEE, tiene derecho a acceder a la información personal que tenemos sobre usted, a transferirla a un nuevo servicio y a solicitar que su información personal se corrija, actualice o elimine. Si desea ejercer estos derechos, comuníquese con nosotros a través de la siguiente dirección de contacto: <a href="mailto:thedesborigin@gmail.com" style={{ color: 'blue', textDecoration: 'underline' }}>thedesborigin@gmail.com</a>.
+              Si usted es residente del EEE, tiene derecho a acceder a la información personal que tenemos sobre usted, a transferirla a un nuevo servicio y a solicitar que su información personal se corrija, actualice o elimine. Si desea ejercer estos derechos, comuníquese con nosotros a través de la siguiente dirección de contacto: <a href="mailto:thedesborigin@gmail.com" style={{ color: '#e44604', textDecoration: 'underline' }}>thedesborigin@gmail.com</a>.
             </p>
 
             <h3 className="mb-3" style={{ fontWeight: 'bold' }}>Transferencias Internacionales</h3>
@@ -144,13 +144,12 @@ const Privacidad = () => {
 
             <h3 className="mb-3" style={{ fontWeight: 'bold' }}>Registro</h3>
             <p>
-            Cuando se registra en nuestro Sitio, se almacenará una registro en su dispositivo que nos permite identificar su cuenta y mantenerlo conectado. La información de su cuenta quedará registrada en nuestra base de datos, lo que facilita su acceso futuro y mejora su experiencia de usuario.
+              Cuando se registra en nuestro Sitio, se almacenará un registro en su dispositivo que nos permite identificar su cuenta y mantenerlo conectado. La información de su cuenta quedará registrada en nuestra base de datos, lo que facilita su acceso futuro y mejora su experiencia de usuario.
             </p>
             <h3 className="mb-3" style={{ fontWeight: 'bold' }}>Cambios</h3>
             <p>
               Podemos actualizar esta Política de Privacidad de vez en cuando para reflejar, por ejemplo, cambios en nuestras prácticas o por otras razones operativas, legales o reglamentarias. Cuando actualicemos esta Política de Privacidad, publicaremos la nueva versión en nuestro Sitio y actualizaremos la fecha de la "Última actualización" al final de esta Política de Privacidad. Le animamos a revisar periódicamente esta Política de Privacidad para estar informado sobre cómo estamos protegiendo su información.
             </p>
-
           </div>
         </Container>
       </div>

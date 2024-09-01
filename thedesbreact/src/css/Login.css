@@ -1,0 +1,75 @@
+/* Login.css */
+
+.login-button {
+    background-color: black; /* Color de fondo inicial */
+    border: 2px solid #e44604; /* Color del borde */
+    color: white; /* Color del texto */
+  }
+  
+  .login-button:hover {
+    background-color: #e44604; /* Color de fondo al pasar el ratón */
+    border-color: #e44604; /* Color del borde al pasar el ratón */
+  }
+  
+  .login-link {
+    text-decoration: none; /* Eliminar subrayado */
+    color: black; /* Color de texto inicial */
+    transition: color 0.3s; /* Transición suave para el cambio de color */
+    font-size: 1.2rem; /* Aumentar el tamaño del texto */
+    font-weight: bold; /* Poner el texto en negrita */
+  }
+  
+  .login-link:hover {
+    color: #e44604; /* Color de texto al pasar el ratón */
+  }
+  
+
+  /* Estilo del botón de inicio de sesión y registro */
+.login-button, .register-button {
+    background-color: black; /* Color de fondo inicial */
+    border: 2px solid #e44604; /* Color del borde */
+    color: white; /* Color del texto */
+  }
+  
+  .login-button:hover, .register-button:hover {
+    background-color: #e44604; /* Color de fondo al pasar el ratón */
+    border-color: #e44604; /* Color del borde al pasar el ratón */
+  }
+  
+  /* Estilo de los enlaces */
+  .login-link, .register-link {
+    text-decoration: none; /* Eliminar subrayado */
+    color: black; /* Color de texto inicial */
+    transition: color 0.3s; /* Transición suave para el cambio de color */
+    font-size: 1.2rem; /* Aumentar el tamaño del texto */
+    font-weight: bold; /* Poner el texto en negrita */
+  }
+  
+  .login-link:hover, .register-link:hover {
+    color: #e44604; /* Color de texto al pasar el ratón */
+  }
+
+  /* Estilo del botón de inicio de sesión, registro y recuperación de contraseña */
+.btn-color {
+    background-color: black; /* Color de fondo inicial */
+    border: 2px solid #e44604; /* Color del borde */
+    color: white; /* Color del texto */
+  }
+  
+  .btn-color:hover {
+    background-color: #e44604; /* Color de fondo al pasar el ratón */
+    border-color: #e44604; /* Color del borde al pasar el ratón */
+  }
+  
+  /* Estilo de los enlaces */
+  .link-color {
+    text-decoration: none; /* Eliminar subrayado */
+    color: black; /* Color de texto inicial */
+    transition: color 0.3s; /* Transición suave para el cambio de color */
+    font-size: 1.2rem; /* Aumentar el tamaño del texto */
+    font-weight: bold; /* Poner el texto en negrita */
+  }
+  
+  .link-color:hover {
+    color: #e44604; /* Color de texto al pasar el ratón */
+  }

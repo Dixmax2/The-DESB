@@ -1,0 +1,49 @@
+/* Estilo de cada fila de contenido */
+.row-content {
+  display: flex;
+  justify-content: space-between; /* Distribuye el espacio entre la imagen y el texto */
+  align-items: flex-start; /* Alinea los elementos al inicio */
+  margin-bottom: 2rem; /* Añade espacio entre filas */
+}
+
+/* Estilo de la columna de la imagen */
+.col-image {
+  flex: 0 0 35%; /* La imagen ocupa el 35% del ancho de la fila */
+  margin-right: 1rem; /* Espacio entre la imagen y el texto */
+}
+
+/* Estilo de la columna del texto */
+.col-text {
+  flex: 1; /* El texto ocupa el espacio restante */
+  padding-left: 1rem; /* Añade espacio a la izquierda del texto */
+}
+
+/* Ajusta el tamaño de las imágenes */
+.custom-image {
+  width: 100%; /* Asegura que la imagen ocupe el ancho de su contenedor */
+  max-width: 100%; /* Evita que se expanda más allá de su contenedor */
+  height: auto; /* Mantiene la proporción de la imagen */
+}
+
+
+
+/* Estilo de la Card de presentación */
+.custom-card {
+  margin-top: 2rem; /* Margen superior para separar de la navbar */
+  background-color: black; /* Fondo negro */
+  color: #ffffff; /* Color de texto blanco */
+  border: 2px solid #e44604; /* Borde color naranja */
+  padding: 20px; /* Espaciado interno opcional para mejorar la apariencia */
+  border-radius: 8px; /* Bordes redondeados opcionales */
+}
+
+
+/* Estilo del título de la Card */
+.custom-card-title {
+  font-size: 2rem; /* Tamaño más grande del título */
+  font-weight: bold;
+}
+
+.custom-card-text {
+  font-size: 1rem; /* Ajuste de tamaño del texto de la Card */
+}

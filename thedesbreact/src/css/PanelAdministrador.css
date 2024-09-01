@@ -1,0 +1,34 @@
+/* Estilo para los botones personalizados */
+.btn-custom {
+    background-color: black; /* Color de fondo predeterminado */
+    color: white; /* Color del texto predeterminado */
+    border: none; /* Elimina el borde predeterminado */
+    transition: background-color 0.3s ease; /* Transición suave para el cambio de color */
+  }
+  
+  /* Estilo para el estado hover */
+  .btn-custom:hover {
+    background-color: #e44604; /* Color de fondo cuando se pasa el ratón */
+    color: white; /* Color del texto al pasar el ratón */
+  }
+  
+  /* Estilo para el estado focus (foco) */
+  .btn-custom:focus {
+    background-color: black; /* Mantiene el color de fondo negro cuando tiene el foco */
+    color: white; /* Color del texto en el foco */
+    box-shadow: none; /* Elimina el contorno azul predeterminado */
+    outline: none; /* Elimina el contorno azul del foco */
+  }
+  
+  /* Estilo para el estado active (activo) */
+  .btn-custom:active {
+    background-color: #e44604; /* Color de fondo al hacer clic */
+    color: white; /* Color del texto al hacer clic */
+    box-shadow: none; /* Elimina el contorno del clic */
+    outline: none; /* Elimina el contorno del clic */
+  }
+
+  .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    color: var(--bs-nav-pills-link-active-color);
+    background-color: #e44604;
+}

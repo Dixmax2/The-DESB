@@ -13,7 +13,7 @@ const Footer = () => {
           <h5>Compañía</h5>
           <ul className="footer-list">
             <li><Link to="/nosotros">Nosotros</Link></li>
-            <li><Link to="/vender">Vende Juegos</Link></li>
+            <li><Link to="/vender">Vende Juegos o Intercámbialos</Link></li>
             <li><Link to="/contact">Contáctanos</Link></li>
           </ul>
         </Col>

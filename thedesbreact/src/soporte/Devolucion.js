@@ -30,7 +30,7 @@ const Devolucion = () => {
             <p>
               <strong>Proceso de devolución:</strong>
               <br />
-              • Contacte con nosotros en <a href="mailto:thedesborigin@gmail.com" style={{ color: 'blue', textDecoration: 'underline' }}>thedesborigin@gmail.com</a>. Los costes de devolución correrán a cargo del cliente, salvo error por nuestra parte.
+              • Contacte con nosotros en <a href="mailto:thedesborigin@gmail.com" style={{ color: '#e44604', textDecoration: 'underline' }}>thedesborigin@gmail.com</a>. Los costes de devolución correrán a cargo del cliente, salvo error por nuestra parte.
               <br />
               • Una vez recibida la devolución, reembolsaremos el importe pagado en un plazo máximo de 14 días.
             </p>
@@ -43,7 +43,7 @@ const Devolucion = () => {
             </p>
             <h2 className="mb-3" style={{ fontWeight: 'bold' }}>Iniciar una devolución o reclamación de garantía</h2>
             <p>
-              • Para iniciar una devolución o reclamación de garantía, contacte con nosotros en <a href="mailto:thedesborigin@gmail.com" style={{ color: 'blue', textDecoration: 'underline' }}>thedesborigin@gmail.com</a>.
+              • Para iniciar una devolución o reclamación de garantía, contacte con nosotros en <a href="mailto:thedesborigin@gmail.com" style={{ color: '#e44604', textDecoration: 'underline' }}>thedesborigin@gmail.com</a>.
               <br />
               • Le responderemos en un plazo de 48 horas con las instrucciones necesarias.
               <br />
@@ -54,7 +54,7 @@ const Devolucion = () => {
               • No aceptamos devoluciones fuera del periodo legal de 14 días, ni productos que no estén en condiciones originales.
             </p>
             <p>
-              Estamos aquí para garantizar su satisfacción. No dude en contactarnos mediante el correo electrónico <a href="mailto:thedesborigin@gmail.com" style={{ color: 'blue', textDecoration: 'underline' }}>thedesborigin@gmail.com</a>, llamando al número de teléfono <span style={{ color: 'blue', textDecoration: 'underline' }}>+34 636 239 696</span> o utilizando nuestro chat de soporte si tiene preguntas o cualquier cuestión.
+              Estamos aquí para garantizar su satisfacción. No dude en contactarnos mediante el correo electrónico <a href="mailto:thedesborigin@gmail.com" style={{ color: '#e44604', textDecoration: 'underline' }}>thedesborigin@gmail.com</a>, llamando al número de teléfono <span style={{ color: '#e44604', textDecoration: 'underline' }}>+34 636 239 696</span> o utilizando nuestro chat de soporte si tiene preguntas o cualquier cuestión.
             </p>
           </div>
         </Container>

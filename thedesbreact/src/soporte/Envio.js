@@ -10,7 +10,7 @@ const Envio = () => {
       <div className="content py-5">
         <Container>
           <h1 className="text-center mb-4" style={{ fontSize: '2.5rem', fontWeight: 'bold' }}>
-            Envíos y Seguimineto
+            Envíos y Seguimiento
           </h1>
           
           {/* Política de envíos */}
@@ -31,7 +31,7 @@ const Envio = () => {
               Una vez que su pedido haya sido enviado, recibirá un correo electrónico con un número de seguimiento que le permitirá verificar el estado de su envío. Los tiempos de actualización de seguimiento pueden variar y pueden tardar hasta 24 horas en estar disponibles.
             </p>
             <p>
-              Si no recibe su pedido dentro del plazo estimado, por favor contáctenos en <a href="mailto:thedesborigin@gmail.com" style={{ color: 'blue', textDecoration: 'underline' }}>thedesborigin@gmail.com</a> con su nombre y número de pedido para que podamos ayudarle a resolver cualquier problema.
+              Si no recibe su pedido dentro del plazo estimado, por favor contáctenos en <a href="mailto:thedesborigin@gmail.com" style={{ color: '#e44604', textDecoration: 'underline' }}>thedesborigin@gmail.com</a> con su nombre y número de pedido para que podamos ayudarle a resolver cualquier problema.
             </p>
 
             {/* Política de devoluciones y garantía */}
@@ -46,7 +46,7 @@ const Envio = () => {
               <br />
               • Los gastos de devolución correrán a cargo del cliente, salvo en casos de error por nuestra parte o productos defectuosos.
               <br />
-              • Para iniciar una devolución, contáctenos en <a href="mailto:thedesborigin@gmail.com" style={{ color: 'blue', textDecoration: 'underline' }}>thedesborigin@gmail.com</a>. Le proporcionaremos las instrucciones necesarias para devolver el producto.
+              • Para iniciar una devolución, contáctenos en <a href="mailto:thedesborigin@gmail.com" style={{ color: '#e44604', textDecoration: 'underline' }}>thedesborigin@gmail.com</a>. Le proporcionaremos las instrucciones necesarias para devolver el producto.
             </p>
             <p>
               Una vez que recibamos el producto devuelto, le reembolsaremos el importe total pagado en un plazo de 14 días. Este reembolso incluirá el coste del producto, pero no los gastos de envío originales.
@@ -60,10 +60,10 @@ const Envio = () => {
               Además, ofrecemos una garantía comercial adicional de 60 días para devoluciones por cualquier motivo, proporcionando una mayor tranquilidad.
             </p>
             <p>
-              Si el producto llega dañado o defectuoso, por favor contáctenos en <a href="mailto:thedesborigin@gmail.com" style={{ color: 'blue', textDecoration: 'underline' }}>thedesborigin@gmail.com</a> con su número de pedido y una foto del daño. Evaluaremos cada caso y buscaremos una solución adecuada.
+              Si el producto llega dañado o defectuoso, por favor contáctenos en <a href="mailto:thedesborigin@gmail.com" style={{ color: '#e44604', textDecoration: 'underline' }}>thedesborigin@gmail.com</a> con su número de pedido y una foto del daño. Evaluaremos cada caso y buscaremos una solución adecuada.
             </p>
             <p>
-              Para cualquier pregunta adicional, no dude en contactarnos mediante el correo electrónico <a href="mailto:thedesborigin@gmail.com" style={{ color: 'blue', textDecoration: 'underline' }}>thedesborigin@gmail.com</a> o llamando al número <a href="tel:+34636239696" style={{ color: 'blue', textDecoration: 'underline' }}>+34 636 239 696</a>. También puede utilizar nuestro chat de soporte para asistencia inmediata.
+              Para cualquier pregunta adicional, no dude en contactarnos mediante el correo electrónico <a href="mailto:thedesborigin@gmail.com" style={{ color: '#e44604', textDecoration: 'underline' }}>thedesborigin@gmail.com</a> o llamando al número <a href="tel:+34636239696" style={{ color: '#e44604', textDecoration: 'underline' }}>+34 636 239 696</a>. También puede utilizar nuestro chat de soporte para asistencia inmediata.
             </p>
           </div>
         </Container>

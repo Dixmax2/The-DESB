@@ -97,7 +97,7 @@ const Terminos = () => {
               Usted acepta proporcionar información actual, completa y precisa sobre su cuenta y compra en todas las compras que realice en nuestra tienda. Usted acepta actualizar de inmediato su cuenta y otra información, incluida su dirección de correo electrónico y los números y fechas de vencimiento de su tarjeta de crédito, para completar sus transacciones y comunicarnos con usted según sea necesario.
             </p>
             <p>
-                Para obtener más detalles, revise nuestra <a href="/devolucion" style={{ color: 'blue', textDecoration: 'underline' }}>Política de Devoluciones</a>.
+                Para obtener más detalles, revise nuestra <a href="/devolucion" style={{ color: '#e44604', textDecoration: 'underline' }}>Política de Devoluciones</a>.
             </p>
             <h2 className="mb-3" style={{ fontWeight: 'bold' }}>Sección 7 - Herramientas Opcionales</h2>
             <p>
@@ -134,7 +134,7 @@ const Terminos = () => {
 
             <h2 className="mb-3" style={{ fontWeight: 'bold' }}>Sección 10 - Información Personal</h2>
             <p>
-              Su presentación de información personal a través de la tienda se rige por nuestra Política de Privacidad. Para ver nuestra Política de Privacidad, visite <a href="/privacidad" style={{ color: 'blue', textDecoration: 'underline' }}>Política de Privacidad</a>.
+              Su presentación de información personal a través de la tienda se rige por nuestra Política de Privacidad. Para ver nuestra Política de Privacidad, visite <a href="/privacidad" style={{ color: '#e44604', textDecoration: 'underline' }}>Política de Privacidad</a>.
             </p>
 
             <h2 className="mb-3" style={{ fontWeight: 'bold' }}>Sección 11 - Errores, Inexactitudes y Omisiones</h2>
@@ -214,11 +214,11 @@ const Terminos = () => {
 
             <p>Las preguntas sobre los Términos de Servicio deben ser enviadas a:
               <br></br>
-              The DEBS:<a href="mailto:thedesborigin@gmail.com" style={{ color: 'blue', textDecoration: 'underline' }}>thedesborigin@gmail.com</a>.
+              The DEBS:<a href="mailto:thedesborigin@gmail.com" style={{ color: '#e44604', textDecoration: 'underline' }}>thedesborigin@gmail.com</a>.
               <br></br>
               También nos puedes contactar atraves de nuestro chat , o de nuestro numero de teléfono: +34636239696.
               <br></br>
-              Visita nuestra apartado <a href="/contact" style={{ color: 'blue', textDecoration: 'underline' }}>Contáctanos</a>.Para cualquier duda.
+              Visita nuestra apartado <a href="/contact" style={{ color: '#e44604', textDecoration: 'underline' }}>Contáctanos</a>.Para cualquier duda.
             </p>
           </div>
         </Container>

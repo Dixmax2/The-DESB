@@ -1,3 +1,4 @@
+/* Estilos para la barra de navegación */
 .navbar {
   display: block;
   width: 100%;
@@ -9,12 +10,16 @@
 }
 
 .dropdown-menu {
-  background-color: black !important; /* Cambiar el color de fondo del menú desplegable a negro */
+  background: linear-gradient(90deg, #e44604, black);
+}
+
+.dropdown-item {
+  color: #ffffff !important; /* Color del texto de los ítems del menú desplegable */
 }
 
 .dropdown-item:hover {
-  background-color: black !important; /* Cambiar el color de fondo al pasar el cursor sobre el elemento */
-  color: #e44604 !important; /* Cambiar el color del texto al pasar el cursor sobre el elemento */
+  background-color: #e44604; /* Color de fondo al pasar el ratón sobre el ítem del menú */
+  color: #000000 !important; /* Color del texto al pasar el ratón sobre el ítem del menú */
 }
 
 .navbar-nav .nav-link,
@@ -29,6 +34,15 @@
 .navbar-nav .dropdown-toggle {
   display: flex;
   align-items: center;
+}
+
+/* Estilo específico para el título del dropdown */
+.navbar-nav .dropdown-toggle {
+  color: white;
+}
+
+.navbar-nav .dropdown-toggle:hover {
+  color: #e44604; /* Color del texto del título del dropdown al pasar el ratón */
 }
 
 .navbar-nav .fa-icon {
@@ -71,6 +85,7 @@
   filter: invert(1); /* Cambia el color del botón de cerrar a blanco */
 }
 
+/* Estilos para la lista de productos */
 .product-list {
   display: flex;
   flex-direction: row; /* Cambia la dirección de los productos a fila */

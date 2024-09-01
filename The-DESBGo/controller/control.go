@@ -339,7 +339,7 @@ func PasswordRecover(c *fiber.Ctx) error {
 	  text-decoration: none !important;
 	}
 	.button-33 {
-	  background-color: #c2fbd7;
+	  background-color: #e44604;
 	  border-radius: 100px;
 	  box-shadow: rgba(44, 187, 99, .2) 0 -25px 18px -14px inset,rgba(44, 187, 99, .15) 0 1px 2px,rgba(44, 187, 99, .15) 0 2px 4px,rgba(44, 187, 99, .15) 0 4px 8px,rgba(44, 187, 99, .15) 0 8px 16px,rgba(44, 187, 99, .15) 0 16px 32px;
 	  color: green;
@@ -421,7 +421,7 @@ func PasswordRecover(c *fiber.Ctx) error {
 		<tr>
 		  <td style="overflow-wrap:break-word;word-break:break-word;padding:30px 10px 10px;font-family:arial,helvetica,sans-serif;" align="left">
 
-		<h1 style="margin: 0px; line-height: 140%; text-align: center; word-wrap: break-word; font-family: 'Montserrat',sans-serif; font-size: 22px; font-weight: 700;"><span><span><span>Se te ha asignado una incidencia</span></span></span></h1>
+		<h1 style="margin: 0px; line-height: 140%; text-align: center; word-wrap: break-word; font-family: 'Montserrat',sans-serif; font-size: 22px; font-weight: 700;"><span><span><span>Se ha asignado un enlace para el cambio de contraseña.</span></span></span></h1>
 		  </td>
 		</tr>
 	  </tbody>
@@ -433,9 +433,9 @@ func PasswordRecover(c *fiber.Ctx) error {
 		  <td style="overflow-wrap:break-word;word-break:break-word;padding:30px 10px 10px;font-family:arial,helvetica,sans-serif;" align="left">
 
 	  <div style="font-size: 14px; line-height: 140%; text-align: center; word-wrap: break-word;">
-		<p style="line-height: 140%;">Hola ` + url + ` se te ha asignado la incidencia <strong>` + url + `</strong> en el proyecto <strong>` + url + `</strong>.</p>
-		<p style="line-height: 140%; padding-bottom: 5%;">visite <a href="https://levitec.ifctransfer.com/dashboard"><strong>Levitec IFC transfer</strong></a> para más información',</p>
-		<a style="text-decoration: none; color: #000000;" href="` + url + `"><button class="button-33"  role="button">Ir al proyecto</button></a>
+		<p style="line-height: 140%;">Pulse aqui <strong>` + url + `</strong> para cambiar la contraseña <strong>` + url + `</strong>.</p>
+		<p style="line-height: 140%; padding-bottom: 5%;"></p>
+		<a style="text-decoration: none; color: #000000;" href="` + url + `"></a>
 	  </div>
 
 		  </td>
@@ -645,39 +645,53 @@ func ActualizarNombre(c *fiber.Ctx) error {
 func CambiarContrasena(c *fiber.Ctx) error {
 	var data map[string]interface{}
 
+	// Parsear el cuerpo de la solicitud
 	err := c.BodyParser(&data)
 	if err != nil {
-		return err
-	}
-
-	id := int(data["id"].(float64))
-
-	var password string
-	err = database.DB.QueryRow("SELECT password FROM users WHERE id = ?", id).Scan(&password)
-	if err != nil {
-		return err
-	}
-
-	err = bcrypt.CompareHashAndPassword([]byte(password), []byte(data["oldPassword"].(string)))
-	if err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-			"message": "Contraseña incorrecta",
+			"message": "Error en el cuerpo de la solicitud",
 		})
 	}
 
-	newPassword, _ := bcrypt.GenerateFromPassword([]byte(data["newPassword"].(string)), 14)
-	_, err = database.DB.Exec("UPDATE users SET password = ? WHERE id = ?", newPassword, id)
+	id := int(data["id"].(float64))
+	oldPassword := data["oldPassword"].(string)
+	newPassword := data["newPassword"].(string)
+
+	// Obtener la contraseña actual del usuario
+	var storedPassword string
+	err = database.DB.QueryRow("SELECT password FROM users WHERE id = ?", id).Scan(&storedPassword)
 	if err != nil {
-		return err
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"message": "Error al recuperar la contraseña del usuario",
+		})
 	}
 
-	_, err = database.DB.Exec("UPDATE users SET password = ? WHERE id = ?", newPassword, id)
+	// Verificar la contraseña actual
+	err = bcrypt.CompareHashAndPassword([]byte(storedPassword), []byte(oldPassword))
 	if err != nil {
-		return err
+		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
+			"message": "Contraseña actual incorrecta",
+		})
+	}
+
+	// Generar la nueva contraseña encriptada
+	newHashedPassword, err := bcrypt.GenerateFromPassword([]byte(newPassword), bcrypt.DefaultCost)
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"message": "Error al encriptar la nueva contraseña",
+		})
+	}
+
+	// Actualizar la contraseña en la base de datos
+	_, err = database.DB.Exec("UPDATE users SET password = ? WHERE id = ?", newHashedPassword, id)
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"message": "Error al actualizar la contraseña",
+		})
 	}
 
 	return c.JSON(fiber.Map{
-		"message": "Contraseña actualizada",
+		"message": "Contraseña actualizada correctamente",
 	})
 }
 
@@ -836,7 +850,7 @@ func InvitarUsuario(c *fiber.Ctx) error {
 	  text-decoration: none !important;
 	}
 	.button-33 {
-	  background-color: #c2fbd7;
+	  background-color: #e44604;
 	  border-radius: 100px;
 	  box-shadow: rgba(44, 187, 99, .2) 0 -25px 18px -14px inset,rgba(44, 187, 99, .15) 0 1px 2px,rgba(44, 187, 99, .15) 0 2px 4px,rgba(44, 187, 99, .15) 0 4px 8px,rgba(44, 187, 99, .15) 0 8px 16px,rgba(44, 187, 99, .15) 0 16px 32px;
 	  color: green;

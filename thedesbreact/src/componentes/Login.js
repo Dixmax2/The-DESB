@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { Container, Form, Button } from 'react-bootstrap';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
@@ -8,6 +8,7 @@ import img from "../assets/images/DESBnegativo.png";
 import Navbar from '../componentes/Navbar';
 import Footer from '../componentes/Footer';
 import { useAppContext } from '../contexto/UserContext';
+import '../css/Login.css'; 
 
 const Login = () => {
   const { dispatch } = useAppContext();
@@ -38,7 +39,7 @@ const Login = () => {
   };
 
   return (
-    <Container fluid className="m-0 p-0 ">
+    <Container fluid className="m-0 p-0">
       <Navbar />
       <section className="h-100 gradient-form" style={{ backgroundColor: "#eee" }}>
         <div className="container py-5">
@@ -60,17 +61,17 @@ const Login = () => {
                         <Form.Control type="password" id="password" placeholder="Password" onChange={e => { setPassword(e.target.value) }} required />
                         <label htmlFor="password">Contraseña</label>
                       </Form.Floating>
-                      <div className="row justify-content-center pointer my-2">
-                        <Link to={"/password-recover"} style={{ textDecoration: 'none', color: 'black' }}>
-                          <small className="text-muted user-select-none pe-auto" id='olvidascontraseña'>¿Olvidaste la contraseña?</small>
+                      <div className="row justify-content-center my-3 px-3">
+                        <Button type="submit" className="login-button btn-block btn btn-primary btn-color">Iniciar sesión</Button>
+                      </div>
+                      <div className="row justify-content-center my-2">
+                        <Link to={"/password-recover"} className="login-link">
+                          <small id='olvidascontraseña'>¿Olvidaste la contraseña?</small>
                         </Link>
                       </div>
-                      <div className="row justify-content-center my-3 px-3">
-                        <Button type="submit" style={{ background: 'black' }} className="btn-block btn btn-primary btn-color">Iniciar sesión</Button>
-                      </div>
-                      <div className="row justify-content-center pointer my-2">
-                        <Link to={"/register"} style={{ textDecoration: 'none', color: 'black' }}>
-                          <small id='pararegistrar' className="text-muted user-select-none pe-auto">¿Todavía no te has Registrado?</small>
+                      <div className="row justify-content-center my-2">
+                        <Link to={"/register"} className="login-link">
+                          <small id='pararegistrar'>¿Todavía no te has Registrado?</small>
                         </Link>
                       </div>
                     </Form>
