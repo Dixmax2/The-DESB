@@ -1,3 +1,9 @@
+Enlace a la pagina de react sin perdida alguna:https://es.react.dev/
+Enlace a la pagina a React y Bootstrap:https://react-bootstrap.netlify.app/
+Enlace a la pagina de https://www.emailjs.com/?src=email-footer y https://jwt.io/
+Enlace a https://dev.to/mrluisfer/configurar-eslint-prettier-junto-con-vscode-3h00
+
+INTRUCCION A REACT(Tambien se puede encontar en los enlaces)
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
