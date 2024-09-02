@@ -27,76 +27,67 @@ const Vender = () => {
     }));
   };
 
+  // Convierte la imagen a Base64
+  const convertToBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onloadend = () => resolve(reader.result);
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  };
+
   // Envía el formulario
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const form = e.currentTarget;
 
     if (form.checkValidity() === false) {
       setValidated(true);
-    } else {
-      // Si hay una imagen, convierte la imagen a base64
-      if (formData.imagen) {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          const base64Image = reader.result; // Resultado de la imagen en base64
-
-          const templateParams = {
-            nombre: formData.nombre,
-            email: formData.email,
-            tipo: formData.tipo,
-            mensaje: formData.mensaje,
-            imagen: `<img src="${base64Image}" alt="Imagen del producto" style="max-width: 100%; height: auto; border: 2px solid #ddd; border-radius: 8px;"/>`,
-          };
-
-          sendEmail(templateParams); // Envía el correo con los parámetros de la plantilla
-        };
-        reader.readAsDataURL(formData.imagen); // Lee el archivo como una URL de datos
-      } else {
-        // Si no hay imagen, envía los datos normalmente
-        const templateParams = {
-          nombre: formData.nombre,
-          email: formData.email,
-          tipo: formData.tipo,
-          mensaje: formData.mensaje,
-          imagen: '',
-        };
-
-        sendEmail(templateParams);
-      }
+      return; // Salir si el formulario no es válido
     }
-  };
 
-  // Función para enviar el correo electrónico
-  const sendEmail = (templateParams) => {
-    emailjs
-      .send(
+    try {
+      let imageBase64 = '';
+
+      if (formData.imagen) {
+        imageBase64 = await convertToBase64(formData.imagen); // Convertir imagen a Base64
+      }
+
+      // Preparar los parámetros para enviar el correo
+      const templateParams = {
+        nombre: formData.nombre,
+        email: formData.email,
+        tipo: formData.tipo,
+        mensaje: formData.mensaje,
+        imagen: imageBase64 ? `<img src="${imageBase64}" alt="Imagen del producto" style="max-width: 100%; height: auto; border: 2px solid #ddd; border-radius: 8px;"/>` : '',
+      };
+
+      // Enviar el correo electrónico con EmailJS
+      await emailjs.send(
         'service_a83nc3q', // Reemplaza con tu Service ID de EmailJS
         'template_p2e7vz2', // Reemplaza con tu Template ID de EmailJS
         templateParams,
         'jggkVv27i9fyFpxTx' // Reemplaza con tu Public Key de EmailJS
-      )
-      .then(
-        (response) => {
-          toast.success('¡Mensaje enviado con éxito!', {
-            position: 'bottom-right',
-          });
-          setFormData({
-            nombre: '',
-            email: '',
-            tipo: '',
-            imagen: null,
-            mensaje: '',
-          });
-          setValidated(false);
-        },
-        (error) => {
-          toast.error('Hubo un error al enviar el mensaje.', {
-            position: 'bottom-right',
-          });
-          console.error('Error al enviar el mensaje:', error);
-        }
       );
+
+      toast.success('¡Mensaje enviado con éxito!', {
+        position: 'bottom-right',
+      });
+      setFormData({
+        nombre: '',
+        email: '',
+        tipo: '',
+        imagen: null,
+        mensaje: '',
+      });
+      setValidated(false);
+    } catch (error) {
+      toast.error('Hubo un error al enviar el mensaje.', {
+        position: 'bottom-right',
+      });
+      console.error('Error al enviar el mensaje:', error);
+    }
   };
 
   return (
@@ -232,17 +223,6 @@ const Vender = () => {
                     style={{
                       backgroundColor: '#000000',
                       borderColor: '#000000',
-                      fontSize: '1.2rem',
-                      marginTop: '10px',
-                      transition: 'background-color 0.3s, border-color 0.3s',
-                    }}
-                    onMouseEnter={(e) => {
-                      e.target.style.backgroundColor = '#e44604';
-                      e.target.style.borderColor = '#e44604';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.target.style.backgroundColor = '#000000';
-                      e.target.style.borderColor = '#000000';
                     }}
                   >
                     Enviar
@@ -254,15 +234,7 @@ const Vender = () => {
         </Container>
       </div>
       <Footer />
-      <ToastContainer
-        position="bottom-right"
-        autoClose={5000}
-        hideProgressBar
-        closeOnClick
-        pauseOnHover
-        draggable
-        theme="colored"
-      />
+      <ToastContainer />
     </div>
   );
 };

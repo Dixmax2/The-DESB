@@ -12,7 +12,7 @@ import '../css/PanelAdministrador.css'; // Asegúrate de importar tu archivo CSS
 function PanelAdministrador() {
     const [view, setView] = useState(1);
     const { state, dispatch } = useAppContext();
-    const [nombre, setNombre] = useState(state.name);
+    const [nombre, setNombre] = useState(state.name || ''); // Asegúrate de inicializar con valor por defecto
     const [oldPass, setOldPass] = useState('');
     const [newPass, setNewPass] = useState('');
     const [confirmNewPass, setConfirmNewPass] = useState('');
@@ -37,12 +37,20 @@ function PanelAdministrador() {
         };
 
         getUsers();
+    }, []);
 
+    useEffect(() => {
         setPasswordsMatch(newPass === confirmNewPass);
     }, [newPass, confirmNewPass]);
 
     const actualizarNombre = async (e) => {
         e.preventDefault();
+
+        if (!nombre || !state.Id) {
+            toast.error('Nombre o ID no válido.');
+            return;
+        }
+
         try {
             const response = await fetch(`${process.env.REACT_APP_API_URL}/actualizar-nombre`, {
                 method: 'POST',
@@ -52,14 +60,20 @@ function PanelAdministrador() {
                     name: nombre
                 })
             });
-            if (!response.ok) throw new Error('Error al actualizar el nombre');
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.message || 'Error al actualizar el nombre');
+            }
+
             const data = await response.json();
             dispatch({ type: 'SET_NAME', value: nombre });
             toast.success(data.message);
         } catch (error) {
+            console.error('Error al actualizar nombre:', error);
             toast.error(`Error al actualizar el nombre: ${error.message}`);
         }
-    }
+    };
 
     const cambiarContraseña = async (e) => {
         e.preventDefault();
@@ -67,7 +81,19 @@ function PanelAdministrador() {
             toast.error('Las contraseñas no coinciden');
             return;
         }
+    
+        if (!state.Id) {
+            toast.error('ID de usuario no válido');
+            return;
+        }
+    
         try {
+            console.log('Enviando datos para cambiar contraseña:', {
+                id: state.Id,
+                oldPassword: oldPass,
+                newPassword: newPass,
+            });
+    
             const response = await fetch(`${process.env.REACT_APP_API_URL}/cambiar-contrasena`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -77,16 +103,24 @@ function PanelAdministrador() {
                     newPassword: newPass,
                 })
             });
+    
             if (!response.ok) {
-                const data = await response.json();
-                throw new Error(data.message || 'Error al cambiar la contraseña');
+                const errorData = await response.json();
+                console.error('Error al cambiar la contraseña:', errorData.message);
+                throw new Error(errorData.message || 'Error al cambiar la contraseña');
             }
+    
             const data = await response.json();
             toast.success(data.message);
         } catch (error) {
             toast.error(`Error al cambiar la contraseña: ${error.message}`);
         }
     };
+    
+    
+    
+    
+    
 
     const DarAdmin = async (user) => {
         try {
@@ -222,7 +256,7 @@ function PanelAdministrador() {
                                     <br />
                                     <input type="text" className="form-control" disabled value={state.email} />
                                 </div>
-                                <div className=" form-group py-1">
+                                <div className="form-group py-1">
                                     Fecha alta
                                     <br />
                                     <input type="text" className="form-control" disabled value={formatDate(state.createdAt)} />
@@ -286,27 +320,33 @@ function PanelAdministrador() {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {users && users.map((user, index) => (
-                                            <tr key={index}>
-                                                <td>{user.id}</td>
-                                                <td>{user.name}</td>
-                                                <td>{user.email}</td>
-                                                <td>{user.role === "admin" && <FontAwesomeIcon icon={faCheck} />}</td>
-                                                <td>
-                                                    <Dropdown>
-                                                        <Dropdown.Toggle variant="primary" id={`dropdown-${index}`} className="btn-custom">
-                                                            <FontAwesomeIcon icon={faGear} />
-                                                        </Dropdown.Toggle>
-                                                        <Dropdown.Menu className='conf-menu'>
-                                                            {user.role !== "admin" && <Dropdown.Item onClick={() => DarAdmin(user)} className="btn-custom">Hacer Admin</Dropdown.Item>}
-                                                            {user.role === "admin" && <Dropdown.Item disabled className="btn-custom">Ya es admin</Dropdown.Item>}
-                                                            {user.role === "admin" && <Dropdown.Item onClick={() => QuitarAdmin(user)} className="btn-custom">Quitar Admin</Dropdown.Item>}
-                                                            <Dropdown.Item disabled className="btn-custom">...</Dropdown.Item>
-                                                        </Dropdown.Menu>
-                                                    </Dropdown>
-                                                </td>
+                                        {users.length > 0 ? (
+                                            users.map((user, index) => (
+                                                <tr key={user.id}>
+                                                    <td>{user.id}</td>
+                                                    <td>{user.name}</td>
+                                                    <td>{user.email}</td>
+                                                    <td>{user.role === "admin" && <FontAwesomeIcon icon={faCheck} />}</td>
+                                                    <td>
+                                                        <Dropdown>
+                                                            <Dropdown.Toggle variant="primary" id={`dropdown-${index}`} className="btn-custom">
+                                                                <FontAwesomeIcon icon={faGear} />
+                                                            </Dropdown.Toggle>
+                                                            <Dropdown.Menu className='conf-menu'>
+                                                                {user.role !== "admin" && <Dropdown.Item onClick={() => DarAdmin(user)} className="btn-custom">Hacer Admin</Dropdown.Item>}
+                                                                {user.role === "admin" && <Dropdown.Item disabled className="btn-custom">Ya es admin</Dropdown.Item>}
+                                                                {user.role === "admin" && <Dropdown.Item onClick={() => QuitarAdmin(user)} className="btn-custom">Quitar Admin</Dropdown.Item>}
+                                                                <Dropdown.Item disabled className="btn-custom">...</Dropdown.Item>
+                                                            </Dropdown.Menu>
+                                                        </Dropdown>
+                                                    </td>
+                                                </tr>
+                                            ))
+                                        ) : (
+                                            <tr>
+                                                <td colSpan="5" className="text-center">No hay usuarios disponibles</td>
                                             </tr>
-                                        ))}
+                                        )}
                                     </tbody>
                                 </Table>
                             </Container>
@@ -320,7 +360,7 @@ function PanelAdministrador() {
                 hideProgressBar
                 closeOnClick
             />
-            <Footer /> 
+            <Footer />
         </Container>
     );
 }

@@ -1,0 +1,94 @@
+/* Estilo para la imagen del producto */
+.product-image {
+    border: 2px solid #e44604; /* Borde del color especificado */
+    border-radius: 5px; /* Bordes redondeados */
+  }
+  
+  /* Estilo para el pequeño título "Certificado aprobado" */
+  .certification-title {
+    display: flex; /* Muestra el ícono y el texto en línea */
+    align-items: center; /* Alinea verticalmente */
+    font-size: 1.2rem; /* Tamaño de letra ajustado */
+    color: #28a745; /* Color verde para el texto */
+    margin-bottom: 1rem; /* Espacio debajo del título */
+  }
+  
+  .icon-certified {
+    margin-right: 0.5rem; /* Espacio a la derecha del ícono */
+    color: #28a745; /* Color verde para el ícono */
+  }
+  
+  /* Estilo para el título del producto */
+  .product-title {
+    font-size: 2.5rem; /* Tamaño grande para el título */
+    font-weight: bold; /* Negrita para el título */
+    margin-bottom: 0.5rem; /* Espacio debajo del título */
+  }
+  
+  /* Estilo para el precio del producto */
+  .product-price {
+    font-size: 2rem; /* Tamaño grande para el precio */
+    font-weight: bold; /* Negrita para el precio */
+    color: #e44604; /* Color destacado */
+    margin-bottom: 1rem; /* Espacio debajo del precio */
+  }
+  
+  /* Estilo para la descripción del producto */
+  .product-description {
+    font-size: 1.5rem; /* Tamaño más grande para la descripción */
+    margin-bottom: 1rem; /* Espacio debajo de la descripción */
+  }
+  
+  /* Estilo para el botón de "Añadir al carro" */
+  .btn-add-to-cart {
+    background-color: black; /* Fondo negro */
+    border: none; /* Sin borde */
+    color: white; /* Texto blanco */
+    font-size: 1.2rem; /* Tamaño de letra del botón */
+    padding: 0.75rem 1.5rem; /* Aumenta el tamaño del botón */
+    transition: background-color 0.3s ease; /* Transición para el cambio de color */
+  }
+  
+  .btn-add-to-cart:hover {
+    background-color: #e44604; /* Color de fondo cuando se pasa el ratón */
+  }
+  
+  /* Estilo para la sección de información adicional */
+  .product-info {
+    margin-top: 2rem; /* Espacio encima de la sección */
+  }
+  
+  .info-title {
+    font-size: 2rem; /* Tamaño más grande para el título de la sección */
+    font-weight: bold; /* Negrita para el título de la sección */
+    margin-bottom: 1rem; /* Espacio debajo del título */
+  }
+  
+  .info-item {
+    display: flex; /* Mostrar ícono y texto en línea */
+    align-items: center; /* Alinear verticalmente */
+    margin-bottom: 1rem; /* Espacio entre los ítems */
+  }
+  
+  .info-text {
+    font-size: 1.2rem; /* Tamaño más grande para el texto */
+    font-weight: bold; /* Negrita para el texto */
+    margin-left: 0.5rem; /* Espacio entre el ícono y el texto */
+  }
+
+  /* Estilo para el precio del producto */
+.product-price {
+    font-size: 2rem; /* Tamaño grande para el precio */
+    font-weight: bold; /* Negrita para el precio */
+    color: black; /* Color negro para el precio */
+    margin-bottom: 1rem; /* Espacio debajo del precio */
+  }
+  
+  
+  @media (max-width: 767px) {
+    .info-item {
+      flex-direction: column; /* Cambia la dirección en pantallas pequeñas */
+      align-items: flex-start; /* Alinea los ítems a la izquierda */
+    }
+  }
+  

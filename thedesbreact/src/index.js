@@ -1,14 +1,18 @@
+// src/index.js
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { UserProvider } from './contexto/UserContext';
+import { CartProvider } from './contexto/CartContext'; 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <UserProvider>
-    <App />
+    <CartProvider> 
+      <App />
+    </CartProvider>
   </UserProvider>
 );
 

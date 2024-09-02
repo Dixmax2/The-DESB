@@ -19,24 +19,32 @@ const initialState = {
 
 // Define el reducer
 const reducer = (state, action) => {
-  console.log(action);
-
   switch (action.type) {
     case 'SET_NAME':
       return {
         ...state,
         name: action.value,
       };
+    case 'SET_ID':
+      return {
+        ...state,
+        Id: action.value,
+      };
+    case 'SET_ROLE':
+      return {
+        ...state,
+        role: action.value,
+      };
+    case 'SET_EMAIL':
+      return {
+        ...state,
+        email: action.value,
+      };
     case 'SET_ERROR':
       return {
         ...state,
         error: action.payload,
       };
-      case 'SET_ROLE':
-        return {
-          ...state,
-          role: action.value,
-        };
     default:
       return state;
   }

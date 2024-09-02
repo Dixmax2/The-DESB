@@ -2,7 +2,6 @@ package controller
 
 import (
 	"database/sql"
-	"fmt"
 	"math/rand"
 	"net/smtp"
 	"principal/database"
@@ -623,18 +622,29 @@ func RandString(n int) string {
 
 func ActualizarNombre(c *fiber.Ctx) error {
 	var data map[string]interface{}
-	fmt.Println(data)
 
-	err := c.BodyParser(&data)
-	if err != nil {
-		return err
+	// Parsear el cuerpo de la solicitud
+	if err := c.BodyParser(&data); err != nil {
+		return fiber.NewError(fiber.StatusBadRequest, "Error al analizar los datos")
 	}
 
-	id := int(data["id"].(float64))
+	// Verificar que los datos contengan el id y el nombre
+	id, okId := data["id"].(float64)
+	name, okName := data["name"].(string)
+	if !okId || !okName {
+		return fiber.NewError(fiber.StatusBadRequest, "Datos incompletos o incorrectos")
+	}
 
-	_, err = database.DB.Exec("UPDATE users SET name = ? WHERE id = ?", data["name"], id)
+	// Ejecutar la actualización en la base de datos
+	result, err := database.DB.Exec("UPDATE users SET name = ? WHERE id = ?", name, int(id))
 	if err != nil {
-		return err
+		return fiber.NewError(fiber.StatusInternalServerError, "Error al actualizar el nombre")
+	}
+
+	// Verificar que se haya actualizado al menos una fila
+	rowsAffected, _ := result.RowsAffected()
+	if rowsAffected == 0 {
+		return fiber.NewError(fiber.StatusNotFound, "Usuario no encontrado")
 	}
 
 	return c.JSON(fiber.Map{
@@ -645,7 +655,6 @@ func ActualizarNombre(c *fiber.Ctx) error {
 func CambiarContrasena(c *fiber.Ctx) error {
 	var data map[string]interface{}
 
-	// Parsear el cuerpo de la solicitud
 	err := c.BodyParser(&data)
 	if err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
@@ -653,20 +662,40 @@ func CambiarContrasena(c *fiber.Ctx) error {
 		})
 	}
 
-	id := int(data["id"].(float64))
-	oldPassword := data["oldPassword"].(string)
-	newPassword := data["newPassword"].(string)
+	id, ok := data["id"].(float64)
+	if !ok {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"message": "ID inválido",
+		})
+	}
 
-	// Obtener la contraseña actual del usuario
+	oldPassword, ok := data["oldPassword"].(string)
+	if !ok {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"message": "Contraseña actual inválida",
+		})
+	}
+
+	newPassword, ok := data["newPassword"].(string)
+	if !ok {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"message": "Nueva contraseña inválida",
+		})
+	}
+
 	var storedPassword string
-	err = database.DB.QueryRow("SELECT password FROM users WHERE id = ?", id).Scan(&storedPassword)
+	err = database.DB.QueryRow("SELECT password FROM users WHERE id = ?", int(id)).Scan(&storedPassword)
 	if err != nil {
+		if err == sql.ErrNoRows {
+			return c.Status(fiber.StatusNotFound).JSON(fiber.Map{
+				"message": "Usuario no encontrado",
+			})
+		}
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": "Error al recuperar la contraseña del usuario",
 		})
 	}
 
-	// Verificar la contraseña actual
 	err = bcrypt.CompareHashAndPassword([]byte(storedPassword), []byte(oldPassword))
 	if err != nil {
 		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
@@ -674,7 +703,6 @@ func CambiarContrasena(c *fiber.Ctx) error {
 		})
 	}
 
-	// Generar la nueva contraseña encriptada
 	newHashedPassword, err := bcrypt.GenerateFromPassword([]byte(newPassword), bcrypt.DefaultCost)
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
@@ -682,8 +710,7 @@ func CambiarContrasena(c *fiber.Ctx) error {
 		})
 	}
 
-	// Actualizar la contraseña en la base de datos
-	_, err = database.DB.Exec("UPDATE users SET password = ? WHERE id = ?", newHashedPassword, id)
+	_, err = database.DB.Exec("UPDATE users SET password = ? WHERE id = ?", newHashedPassword, int(id))
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": "Error al actualizar la contraseña",
@@ -932,7 +959,7 @@ func InvitarUsuario(c *fiber.Ctx) error {
 		<tr>
 		  <td style="overflow-wrap:break-word;word-break:break-word;padding:30px 10px 10px;font-family:arial,helvetica,sans-serif;" align="left">
 
-		<h1 style="margin: 0px; line-height: 140%; text-align: center; word-wrap: break-word; font-family: 'Montserrat',sans-serif; font-size: 22px; font-weight: 700;"><span><span><span>Se te ha invitado a Levitec</span></span></span></h1>
+		<h1 style="margin: 0px; line-height: 140%; text-align: center; word-wrap: break-word; font-family: 'Montserrat',sans-serif; font-size: 22px; font-weight: 700;"><span><span><span>Se te ha invitado a The DESB</span></span></span></h1>
 		  </td>
 		</tr>
 	  </tbody>
@@ -945,7 +972,7 @@ func InvitarUsuario(c *fiber.Ctx) error {
 
 	  <div style="font-size: 14px; line-height: 140%; text-align: center; word-wrap: break-word;">
 		<p style="line-height: 140%;">Hola</p><br/>
-        <p style="line-height: 140%;">Este correo ha sido enviado, para invitarte a unir a IFC-Levitec</p><br/><br/>
+        <p style="line-height: 140%;">Este correo ha sido enviado, para invitarte a unir a The DESB</p><br/><br/>
 		<a style="text-decoration: none; color: #000000;" href="` + url + `"><button class="button-33"  role="button">Acceder para registrar</button></a>
 	  </div>
 

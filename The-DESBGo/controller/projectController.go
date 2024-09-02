@@ -195,13 +195,69 @@ func GetProjects(c *fiber.Ctx) error {
 	return c.JSON(productos)
 }
 
+func GetProductByID(c *fiber.Ctx) error {
+	id := c.Params("id")
+
+	var producto model.Producto
+	err := database.DB.QueryRow("SELECT * FROM productos WHERE id = ? AND archivado = false", id).Scan(
+		&producto.ID,
+		&producto.Name,
+		&producto.Descripcion,
+		&producto.FechaCreacion,
+		&producto.Precio,
+		&producto.Tipo,
+		&producto.Cantidad,
+		&producto.Miniatura,
+		&producto.Archivado,
+		&producto.FechaExpiracion,
+	)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"error": "Product not found"})
+		}
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": err.Error()})
+	}
+
+	// Consultar el número de usuarios asignados al producto
+	var countUsuarios int
+	if err := database.DB.QueryRow("SELECT COUNT(*) FROM project_assignments WHERE producto_id = ?", producto.ID).Scan(&countUsuarios); err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": err.Error()})
+	}
+
+	if countUsuarios > 0 {
+		// Consultar usuarios asignados al producto
+		rowsUsuarios, err := database.DB.Query("SELECT u.id, u.name, u.email, u.role FROM users u JOIN project_assignments pa ON u.id = pa.user_id WHERE pa.producto_id = ?", producto.ID)
+		if err != nil {
+			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": err.Error()})
+		}
+		defer rowsUsuarios.Close()
+
+		var usuarios []model.User
+		for rowsUsuarios.Next() {
+			var usuario model.User
+			if err := rowsUsuarios.Scan(
+				&usuario.ID,
+				&usuario.Name,
+				&usuario.Email,
+				&usuario.Role,
+			); err != nil {
+				return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": err.Error()})
+			}
+			usuarios = append(usuarios, usuario)
+		}
+		producto.Users = usuarios
+	}
+
+	return c.JSON(producto)
+}
+
 func EditProject(c *fiber.Ctx) error {
 	// Obtener el ID del producto a editar
 	id := c.FormValue("id")
 
 	// Buscar el producto en la base de datos por su ID
 	var producto model.Producto
-	err := database.DB.QueryRow("SELECT id, name, descripcion, lantitud, longitud, miniatura FROM productos WHERE id = ?", id).Scan(
+	err := database.DB.QueryRow("SELECT id, name, descripcion, precio, tipo, cantidad, miniatura FROM productos WHERE id = ?", id).Scan(
 		&producto.ID,
 		&producto.Name,
 		&producto.Descripcion,
@@ -226,7 +282,6 @@ func EditProject(c *fiber.Ctx) error {
 
 	// Manejo del archivo de miniatura si se proporciona
 	imageFile, err := c.FormFile("imageFile")
-
 	if err == nil {
 		// Verificar la extensión de la imagen
 		splitFileName := s.Split(imageFile.Filename, ".")
@@ -258,26 +313,9 @@ func EditProject(c *fiber.Ctx) error {
 		// Actualizar el campo de miniatura en la estructura del producto
 		producto.Miniatura = "miniatura." + extensionImg
 	}
-	if err != nil {
-		// Guardar los cambios en la base de datos sin modificar la miniatura
-		_, err = database.DB.Exec("UPDATE productos SET name = ?, descripcion = ?, lantitud = ?, longitud = ? WHERE id = ?",
-			producto.Name,
-			producto.Descripcion,
-			producto.Precio,
-			producto.Tipo,
-			producto.Cantidad,
-			producto.ID,
-		)
-		if err != nil {
-			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "No se pudieron guardar los cambios"})
-		}
-
-		// Respuesta JSON con los datos del producto editado
-		return c.JSON(producto)
-	}
 
 	// Guardar los cambios en la base de datos
-	_, err = database.DB.Exec("UPDATE productos SET name = ?, descripcion = ?, lantitud = ?, longitud = ?, miniatura = ? WHERE id = ?",
+	_, err = database.DB.Exec("UPDATE productos SET name = ?, descripcion = ?, precio = ?, tipo = ?, cantidad = ?, miniatura = ? WHERE id = ?",
 		producto.Name,
 		producto.Descripcion,
 		producto.Precio,
@@ -292,6 +330,44 @@ func EditProject(c *fiber.Ctx) error {
 
 	// Respuesta JSON con los datos del producto editado
 	return c.JSON(producto)
+}
+
+func DeleteProject(c *fiber.Ctx) error {
+	// Obtener el ID del producto a eliminar
+	id := c.Params("id")
+
+	// Verificar si el producto existe antes de eliminarlo
+	var producto model.Producto
+	err := database.DB.QueryRow("SELECT id, miniatura FROM productos WHERE id = ?", id).Scan(
+		&producto.ID,
+		&producto.Miniatura,
+	)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"error": "producto no encontrado"})
+		}
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Error al buscar producto"})
+	}
+
+	// Eliminar el archivo de miniatura si existe
+	if producto.Miniatura != "" {
+		projectPath := "./projects/" + strconv.FormatUint(uint64(producto.ID), 10)
+		oldImagePath := filepath.Join(projectPath, producto.Miniatura)
+		if _, err := os.Stat(oldImagePath); err == nil {
+			if err := os.Remove(oldImagePath); err != nil {
+				return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "No se pudo eliminar el archivo de miniatura"})
+			}
+		}
+	}
+
+	// Eliminar el producto de la base de datos
+	_, err = database.DB.Exec("DELETE FROM productos WHERE id = ?", id)
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "No se pudo eliminar el producto"})
+	}
+
+	// Responder con éxito
+	return c.JSON(fiber.Map{"message": "Producto eliminado correctamente"})
 }
 
 func GetProjectByUser(c *fiber.Ctx) error {

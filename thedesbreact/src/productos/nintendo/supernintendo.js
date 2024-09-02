@@ -1,15 +1,15 @@
-import React, { useState,useEffect } from 'react';
-import { Col,Container,Row } from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
+import { Col, Container, Row } from 'react-bootstrap';
 import Navbar from '../../componentes/Navbar';
 import Footer from '../../componentes/Footer';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faFileZipper, faFolder, faUsers } from '@fortawesome/free-solid-svg-icons';
 import ProjectCard from '../ProyectsCard';
 import Modales from '../Modales';
 import Filter from '../Filter';
 import PresentationCards from '../PresentationCards';
 import axios from 'axios';
+import { useAppContext } from '../../contexto/UserContext';
 
+// Función para obtener productos desde la API
 const fetchProductos = async (setProductos) => {
   try {
     const response = await axios.get(`${process.env.REACT_APP_API_URL}/get-productos`);
@@ -19,52 +19,91 @@ const fetchProductos = async (setProductos) => {
   }
 };
 
+// Componente principal
 const Supernintendo = () => {
+  const { state } = useAppContext(); // Obtener el estado del contexto
+  const [productos, setProductos] = useState([]);
+  const [filteredProductos, setFilteredProductos] = useState([]);
+  const [product, setProduct] = useState([]);
+  const [show, setShow] = useState(false);
+  const [showEdit, setShowEdit] = useState(false);
+  const [showUser, setShowUser] = useState(false);
+  const [showArchi, setShowArchi] = useState(false);
+  const [filters, setFilters] = useState({
+    type: { Videojuego: false, Consola: false, Accesorio: false },
+    price: { 'Menos de $20': false, '$20 - $50': false, 'Más de $50': false },
+    availability: { 'En Stock': false, Agotado: false }
+  });
 
-const [productos, setProductos] = useState([]);
+  // Obtener el rol del usuario desde el contexto
+  const userRole = state.role;
 
-const [product, setProduct] = useState([]);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
-const [show, setShow] = useState(false);
-const [showEdit, setShowEdit] = useState(false);
-const [showUser, setShowUser] = useState(false);
-const [showArchi, setShowArchi] = useState(false);
+  const closeEdit = () => setShowEdit(false);
+  const handleShowEdit = () => setShowEdit(true);
+  const handleSetEdit = (product) => setProduct(product);
 
+  const handleShowUser = () => setShowUser(true);
+  const closeUser = () => setShowUser(false);
 
-const handleClose = () => setShow(false);
-const handleShow = () => setShow(true);
+  const handleShowArchi = () => setShowArchi(true);
+  const closeArchi = () => setShowArchi(false);
+  const handleSetProject = (product) => setProduct(product);
 
-const closeEdit = () => setShowEdit(false);
-const handleShowEdit = () => setShowEdit(true);
-const handleSetEdit = (product) => setProduct(product);
+  useEffect(() => {
+    fetchProductos(setProductos);
+  }, []);
 
-const handleShowUser = () => setShowUser(true);
-const closeUser = () => setShowUser(false);
+  useEffect(() => {
+    let filtered = productos;
 
-const handleShowArchi = () => setShowArchi(true)
-const handleSetProject = (product) => setProduct(product);
+    // Filtrado por tipo
+    if (Object.values(filters.type).some(value => value)) {
+      filtered = filtered.filter(product => filters.type[product.tipo]);
+    }
 
-useEffect(() => {
-  // Llamar a fetchProductos cuando se monta el componente
-  fetchProductos(setProductos);
-  //fetchProjectsArchi(setProyectosArchi);
-}, []);
+    // Filtrado por precio
+    if (Object.values(filters.price).some(value => value)) {
+      filtered = filtered.filter(product => {
+        const precio = parseFloat(product.precio);
+        if (filters.price['Menos de $20'] && precio < 20) return true;
+        if (filters.price['$20 - $50'] && precio >= 20 && precio <= 50) return true;
+        if (filters.price['Más de $50'] && precio > 50) return true;
+        return false;
+      });
+    }
 
-function handleEditProject(product) {
-  handleShowEdit(true);
-  handleSetEdit(product);
+    // Filtrado por disponibilidad
+    if (Object.values(filters.availability).some(value => value)) {
+      filtered = filtered.filter(product => {
+        if (filters.availability['En Stock'] && product.cantidad > 0) return true;
+        if (filters.availability.Agotado && product.cantidad <= 0) return true;
+        return false;
+      });
+    }
 
-};
+    setFilteredProductos(filtered);
+  }, [filters, productos]);
 
-function callModal(product) {
-  handleShowArchi(true)
-  handleSetProject(product)
-}
+  const handleFilterChange = (updatedFilters) => {
+    setFilters(updatedFilters);
+  };
+
+  const handleEditProject = (product) => {
+    handleShowEdit();
+    handleSetEdit(product);
+  };
+
+  const callModal = (product) => {
+    handleShowArchi();
+    handleSetProject(product);
+  };
 
   return (
     <div id="root">
       <Navbar />
-
 
       <Container fluid className="main-content">
         {/* Sección de presentación */}
@@ -73,42 +112,35 @@ function callModal(product) {
         {/* Filtros y productos */}
         <Row>
           <Col md={3} className="filter-column">
-            <Filter />
+            <Filter onFilterChange={handleFilterChange} />
           </Col>
 
           <Col md={9}>
             <ProjectCard 
-              productos={productos}
+              productos={filteredProductos} // Utilizar los productos filtrados
               handleShow={handleShow}
               handleEditProject={handleEditProject}
-              handleShowUser={handleShowUser}
-              handleShowArchi={handleShowArchi}
-              handleSetProject={handleSetProject}
               callModal={callModal}
+              userRole={userRole} // Pasar el rol del usuario
             />
           </Col>
         </Row>
       </Container>
 
       <Modales
-            productos={productos}
-            show={show}
-            showEdit={showEdit}
-            showUser={showUser}
-            showArchi={showArchi}
-            product={product}
-            //showDesh={showDesh}
-
-
-            setProductos={setProductos}
-            //setProyectosArchi={setProyectosArchi}
-            fetchProductos={fetchProductos}
-            //fetchProjectsArchived={fetchProjectsArchi}
-            handleClose={handleClose}
-            closeEdit={closeEdit}
-            closeUser={closeUser}
-             
-          />
+        productos={productos}
+        show={show}
+        showEdit={showEdit}
+        showUser={showUser}
+        showArchi={showArchi}
+        product={product}
+        setProductos={setProductos}
+        fetchProductos={fetchProductos}
+        handleClose={handleClose}
+        closeEdit={closeEdit}
+        closeUser={closeUser}
+        closeArchi={closeArchi}
+      />
   
       <Footer />
     </div>

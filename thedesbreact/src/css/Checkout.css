@@ -1,0 +1,46 @@
+.checkout-container {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .logo-image {
+    max-width: 200px; /* Ajusta según sea necesario */
+    height: auto;
+    margin-bottom: 20px;
+  }
+  
+  .billing-card, .order-summary-card {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .billing-card {
+    margin-right: 10px;
+  }
+  
+  .order-summary-card {
+    margin-left: 10px;
+  }
+  
+  .btn-pay {
+    width: 100%;
+    padding: 15px; /* Aumenta el tamaño del botón */
+    font-size: 1.25rem; /* Tamaño de texto más grande */
+    background-color: #000; /* Fondo negro */
+    border: none;
+    color: white;
+  }
+  
+  .btn-secondary {
+    background-color: #007bff; /* Color de fondo azul para el botón de volver */
+    border: none;
+    color: white;
+  }
+  
+  .alert-success {
+    margin-bottom: 20px;
+  }
+  

@@ -11,19 +11,28 @@ import InvitarUsuarios from './componentes/Invitar-usuarios';
 import Nosotros from './views/Nosotros';
 import Contact from './views/Contact';
 import Vender from './views/Vender';
-import './App.css';
 import Envio from './soporte/Envio';
 import Devolucion from './soporte/Devolucion';
 import Terminos from './soporte/Terminos';
 import Privacidad from './soporte/Privacidad';
 import Supernintendo from './productos/nintendo/supernintendo';
+import Wii from './productos/nintendo/wii';
+import Producto from './productos/Producto';
+import SearchResults from './componentes/SearchResults'; // Importa tu nuevo componente de búsqueda
 import { useAppContext } from './contexto/UserContext';
-import ChatButton from './componentes/ChatBoton'; // Importa el botón flotante
-import Chat from './componentes/Chat'; // Importa el componente del chat
-
+import ChatButton from './componentes/ChatBoton';
+import Chat from './componentes/Chat';
+import Checkout from './componentes/Checkout';
+import Ds from './productos/nintendo/3ds';
+import Ps2 from './productos/playstation/ps2';
+import Ps3 from './productos/playstation/ps3';
+import Ps4 from './productos/playstation/ps4';
+import Origin from './productos/xbox/originalxbox';
+import Xbox360 from './productos/xbox/xbox360';
+import One from './productos/xbox/xboxone';
 function App() {
-  const { dispatch, state } = useAppContext(); // Asegúrate de obtener el estado del usuario
-  const [showChat, setShowChat] = useState(false); // Estado para controlar la visibilidad del chat
+  const { dispatch, state } = useAppContext();
+  const [showChat, setShowChat] = useState(false);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -33,13 +42,9 @@ function App() {
           credentials: 'include',
         });
         const content = await response.json();
-        // Actualiza el estado utilizando el contexto
         dispatch({ type: 'SET_NAME', value: content.name });
         dispatch({ type: 'SET_ROLE', value: content.role });
-        console.log(content.name);
-        console.log(content.role);
       } catch (error) {
-        // Maneja los errores
         console.error('Error fetching user data:', error);
       }
     };
@@ -47,10 +52,9 @@ function App() {
     fetchUserData();
   }, [dispatch]);
 
-  // Función para manejar la apertura y cierre del chat
   const handleChatOpen = () => setShowChat(true);
   const handleChatClose = () => setShowChat(false);
-console.log(state.user)
+
   return (
     <div className="App">
       <BrowserRouter>
@@ -70,13 +74,20 @@ console.log(state.user)
           <Route path="/terminos" element={<Terminos />} />
           <Route path="/privacidad" element={<Privacidad />} />
           <Route path="/supernintendo" element={<Supernintendo />} />
+          <Route path="/nintendo-3ds" element={<Ds />} />
+          <Route path="/nintendo-wii" element={<Wii/>} />
+          <Route path="/ps1" element={<Ps2 />} />
+          <Route path="/ps2" element={<Ps3 />} />
+          <Route path="/ps4" element={<Ps4 />} />
+          <Route path="/xbox-series-x" element={<Origin />} />
+          <Route path="/xbox360" element={<Xbox360 />} />
+          <Route path="/xbox-one" element={<One />} />
+          <Route path="/proyect/:id" element={<Producto />} /> 
+          <Route path="/search" element={<SearchResults />} /> 
+          <Route path="/checkout" element={<Checkout />} /> 
         </Routes>
-      {/* Botón flotante de chat */}
-      <ChatButton onClick={handleChatOpen} />
-
-      {/* Componente de chat */}
-      
-      <Chat show={showChat} handleClose={handleChatClose} icon="chat" user={state.user} />
+        <ChatButton onClick={handleChatOpen} />
+        <Chat show={showChat} handleClose={handleChatClose} icon="chat" user={state.user} />
       </BrowserRouter>
     </div>
   );

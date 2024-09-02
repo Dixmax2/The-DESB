@@ -191,17 +191,7 @@ const Navbar = () => {
             </div>
             <div className="product">
               <h5>Otros</h5>
-              <ul>
-                <li>
-                  <a href="/ouya">Cables</a>
-                </li>
-                <li>
-                  <a href="/atari">Cascos</a>
-                </li>
-                <li>
-                  <a href="/commodore">Commodore</a>
-                </li>
-              </ul>
+              
             </div>
           </div>
         </Offcanvas.Body>

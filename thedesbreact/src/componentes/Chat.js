@@ -18,29 +18,7 @@ function Chat({ show, handleClose, icon, user }) {
     const messagesEndRef = useRef(null);
 
     useEffect(() => {
-        if (!show) return;  // No hacer nada si el chat no está visible
-
-        if (user === undefined) {  // Si user es undefined, no abrir la pestaña del chat
-            toast.warn('Por favor, inicie sesión para acceder al chat.');
-            navigate('/login');
-
-            // Verificar que 'handleClose' sea una función antes de llamarla
-            if (typeof handleClose === 'function') {
-                handleClose();  // Cierra la pestaña de chat
-            }
-            return;  // Detener la ejecución aquí
-        }
-
-        // Verificar si el usuario tiene el rol adecuado
-        if (user.role !== 'user' && user.role !== 'admin') {
-            toast.warn('Por favor, inicie sesión como usuario o administrador para acceder al chat.');
-            navigate('/login');
-
-            if (typeof handleClose === 'function') {
-                handleClose();  // Cierra la pestaña de chat
-            }
-            return;
-        }
+       
 
         // Si el usuario está autenticado y tiene el rol adecuado, establecer la conexión WebSocket
         const fetchMessages = async () => {

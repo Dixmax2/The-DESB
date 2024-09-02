@@ -25,9 +25,14 @@ func StupRoutes(app *fiber.App) {
 
 	app.Post("/add-product", controller.AddProduct)
 	app.Get("/get-productos", controller.GetProjects)
+	app.Get("/get-productos/:id", controller.GetProductByID)
 	app.Put("/edit-project", controller.EditProject)
+	app.Delete("/delete-product/:id", controller.DeleteProject)
+
 	//app.Post("/assign-user-to-project", controller.AssignUserToProject)
 	app.Get("/get-project-by-user", controller.GetProjectByUser)
+
+	app.Get("/search-products", controller.SearchProducts)
 
 	app.Get("/ws", websocket.New(controller.HandleConnections))
 	app.Post("/getMessages", controller.GetMessages)

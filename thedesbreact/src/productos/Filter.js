@@ -6,7 +6,27 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter } from '@fortawesome/free-solid-svg-icons';
 import '../css/filter.css';  // Archivo CSS para estilos personalizados
 
-const Filter = () => {
+const Filter = ({ onFilterChange }) => {
+  // Estado local para manejar cambios en los filtros
+  const [localFilters, setLocalFilters] = React.useState({
+    type: { Videojuego: false, Consola: false, Accesorio: false }, // Cambio de "category" a "type"
+    price: { 'Menos de $20': false, '$20 - $50': false, 'Más de $50': false },
+    availability: { 'En Stock': false, Agotado: false },
+  });
+
+  // Manejador de cambios para los filtros
+  const handleCheckboxChange = (section, name) => {
+    const updatedFilters = {
+      ...localFilters,
+      [section]: {
+        ...localFilters[section],
+        [name]: !localFilters[section][name],
+      },
+    };
+    setLocalFilters(updatedFilters);
+    onFilterChange(updatedFilters);
+  };
+
   return (
     <Card className="filter-card sticky-filter">
       <Card.Body>
@@ -16,37 +36,67 @@ const Filter = () => {
         </Card.Title>
         
         <Form>
-          {/* Categoría */}
-          <Form.Group controlId="categoryFilter">
-            <Form.Label className="filter-section-title">Categoría</Form.Label>
-            <Form.Check type="checkbox" label="Juegos" />
-            <Form.Check type="checkbox" label="Consolas" />
-            <Form.Check type="checkbox" label="Accesorios" />
+          {/* Tipo */}
+          <Form.Group controlId="typeFilter">
+            <Form.Label className="filter-section-title">Tipo</Form.Label>
+            <Form.Check 
+              type="checkbox" 
+              label="Videojuego" 
+              checked={localFilters.type.Videojuego} 
+              onChange={() => handleCheckboxChange('type', 'Videojuego')} 
+            />
+            <Form.Check 
+              type="checkbox" 
+              label="Consola" 
+              checked={localFilters.type.Consola} 
+              onChange={() => handleCheckboxChange('type', 'Consola')} 
+            />
+            <Form.Check 
+              type="checkbox" 
+              label="Accesorio" 
+              checked={localFilters.type.Accesorio} 
+              onChange={() => handleCheckboxChange('type', 'Accesorio')} 
+            />
           </Form.Group>
 
           {/* Precio */}
           <Form.Group controlId="priceFilter" className="mt-3">
             <Form.Label className="filter-section-title">Precio</Form.Label>
-            <Form.Check type="checkbox" label="Menos de $20" />
-            <Form.Check type="checkbox" label="$20 - $50" />
-            <Form.Check type="checkbox" label="Más de $50" />
+            <Form.Check 
+              type="checkbox" 
+              label="Menos de $20" 
+              checked={localFilters.price['Menos de $20']} 
+              onChange={() => handleCheckboxChange('price', 'Menos de $20')} 
+            />
+            <Form.Check 
+              type="checkbox" 
+              label="$20 - $50" 
+              checked={localFilters.price['$20 - $50']} 
+              onChange={() => handleCheckboxChange('price', '$20 - $50')} 
+            />
+            <Form.Check 
+              type="checkbox" 
+              label="Más de $50" 
+              checked={localFilters.price['Más de $50']} 
+              onChange={() => handleCheckboxChange('price', 'Más de $50')} 
+            />
           </Form.Group>
 
           {/* Disponibilidad */}
           <Form.Group controlId="availabilityFilter" className="mt-3">
             <Form.Label className="filter-section-title">Disponibilidad</Form.Label>
-            <Form.Check type="checkbox" label="En Stock" />
-            <Form.Check type="checkbox" label="Agotado" />
-          </Form.Group>
-
-          {/* Condición del producto */}
-          <Form.Group controlId="conditionFilter" className="mt-3">
-            <Form.Label className="filter-section-title">Condición del producto</Form.Label>
-            <Form.Check type="checkbox" label="Aceptable (13)" />
-            <Form.Check type="checkbox" label="Feria (1200)" />
-            <Form.Check type="checkbox" label="Bueno (1212)" />
-            <Form.Check type="checkbox" label="Bueno/ Completo (1)" />
-            <Form.Check type="checkbox" label="Muy bueno (1213)" />
+            <Form.Check 
+              type="checkbox" 
+              label="En Stock" 
+              checked={localFilters.availability['En Stock']} 
+              onChange={() => handleCheckboxChange('availability', 'En Stock')} 
+            />
+            <Form.Check 
+              type="checkbox" 
+              label="Agotado" 
+              checked={localFilters.availability.Agotado} 
+              onChange={() => handleCheckboxChange('availability', 'Agotado')} 
+            />
           </Form.Group>
         </Form>
       </Card.Body>
@@ -55,4 +105,3 @@ const Filter = () => {
 };
 
 export default Filter;
-

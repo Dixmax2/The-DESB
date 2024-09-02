@@ -77,7 +77,7 @@ func HandleMessages() {
 			}
 
 			// Crear un nombre de archivo único usando timestamp
-			fileName := fmt.Sprintf("%d."+extensionImg, time.Now().UnixNano())
+			fileName := fmt.Sprintf("%d.%s", time.Now().UnixNano(), extensionImg)
 			filePath := filepath.Join("projects", msg.RoomID, "messages", fileName)
 
 			// Crear el directorio si no existe
@@ -94,10 +94,10 @@ func HandleMessages() {
 
 			// Actualizar msg.Image para que contenga el nombre del archivo
 			msg.Image = fileName
-			fmt.Println(msg.Image)
 		}
 
-		_, err := database.DB.Exec("INSERT INTO messages (sender, user_id, avatar, proyecto_id, content, image, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)", msg.Sender, msg.UserID, msg.Avatar, msg.RoomID, msg.Content, msg.Image, msg.CreatedAt)
+		_, err := database.DB.Exec("INSERT INTO messages (sender, user_id, avatar, room_id, content, image, image_name, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+			msg.Sender, msg.UserID, msg.Avatar, msg.RoomID, msg.Content, msg.Image, msg.ImageName, msg.CreatedAt)
 		if err != nil {
 			log.Printf("Error inserting message into database: %v", err)
 		}
@@ -125,7 +125,7 @@ func GetMessages(c *fiber.Ctx) error {
 	}
 
 	// Consultar todos los mensajes asociados al proyecto, ordenados por fecha de creación
-	rows, err := database.DB.Query("SELECT sender, user_id, avatar, proyecto_id, content, image, created_at FROM messages WHERE proyecto_id = ?", data["projectID"])
+	rows, err := database.DB.Query("SELECT sender, user_id, avatar, room_id, content, image, image_name, created_at FROM messages WHERE room_id = ?", data["projectID"])
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Error retrieving messages from database"})
 	}
@@ -133,29 +133,23 @@ func GetMessages(c *fiber.Ctx) error {
 
 	var messages []model.Messages
 	for rows.Next() {
-		var sender, content, avatar, image, proyecto_id string
+		var sender, content, avatar, image, image_name, room_id string
 		var user_id int
-		var createdAt string
-		if err := rows.Scan(&sender, &user_id, &avatar, &proyecto_id, &content, &image, &createdAt); err != nil {
+		var createdAt time.Time
+		if err := rows.Scan(&sender, &user_id, &avatar, &room_id, &content, &image, &image_name, &createdAt); err != nil {
 			log.Printf("Error scanning message: %v", err)
 			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Error scanning message from database"})
-		}
-
-		// Convertir createdAt a time.Time
-		createdAtTime, err := time.Parse("2006-01-02 15:04:05", createdAt)
-		if err != nil {
-			log.Printf("Error parsing created_at: %v", err)
-			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Error parsing created_at"})
 		}
 
 		msg := model.Messages{
 			Sender:    sender,
 			UserID:    user_id,
 			Avatar:    avatar,
-			RoomID:    proyecto_id,
+			RoomID:    room_id,
 			Content:   content,
 			Image:     image,
-			CreatedAt: createdAtTime,
+			ImageName: image_name,
+			CreatedAt: createdAt,
 		}
 		messages = append(messages, msg)
 	}
@@ -164,5 +158,6 @@ func GetMessages(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Error after scanning messages"})
 	}
 
-	return c.JSON(messages)
+	// Devuelve el array de mensajes en caso de éxito
+	return c.JSON(fiber.Map{"messages": messages})
 }
